@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+    --main-dark: #5eead4;
+    --main-medium: #e5e5e5;
+    --main-light: #f8fafc;
+    --background-color: #52525b;
+    --box-shadow-color: rgba(124, 124, 124, 0.185);
+
+    --topbar-padding: 16px;
+    font-family: "Roboto";
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background-color);
+}
+
+.full-wrapper {
+    width: 100%;
+    margin: 0px 60px;
+    margin-top: 20px;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px 10px rgba(39, 39, 39, 0.534);
+}
+
+.container {
+    display: flex;
+}
+
+.vertical {
+    flex-direction: column;
+}
+
+.sidebar.container {
+    width: 200px;
+    background: var(--main-dark);
+    z-index: 2;
+}
+
+.main.container {
+    flex: 1;
+}
+
+.topbar.container {
+    height: 100px;
+    background: var(--main-light);
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--topbar-padding);
+    box-shadow: 0 2px 4px 2px var(--box-shadow-color);
+    z-index: 1;
+}
+
+.topbar-title.container {
+    justify-content: center;
+    align-items: center;
+}
+
+h1.topbar-title {
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+
+.topbar-buttons.container {
+    gap: 20px;
+}
+
+.topbar-buttons button {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    border-radius: 500px;
+    background: var(--main-dark);
+    color: white;
+}
+
+.main-content.container {
+    flex: 1;
+    background: var(--main-medium);
+}
