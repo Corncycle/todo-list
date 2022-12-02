@@ -12,21 +12,36 @@ export class DOMSidebar {
 
     generateSkeleton() {
         let _, inboxContainer, projectsContainer;
-        [_, inboxContainer] = this.createSection("Inbox");
-        [_, projectsContainer] = this.createSection("Projects");
+        [_, inboxContainer] = this.createSection("Inbox", "../../images/inbox.svg");
+        this.content.push(_, inboxContainer);
+
+        [_, projectsContainer] = this.createSection("Projects", "../../images/projects.svg");
+        this.content.push(_, inboxContainer);
+
         this.containers = {"inbox": inboxContainer, "projects": projectsContainer};
     }
 
-    createSection(name) {
-        let header = document.createElement("h3");
-        header.innerText = name;
-        this.content.push(header);
+    createSection(name, imgPath) {
+        let header = this.createSectionHeader(name, imgPath);
 
         let sectionContainer = document.createElement("div");
         sectionContainer.classList.add("sidebar-section", "container");
-        this.content.push(sectionContainer);
         
         return [header, sectionContainer];
+    }
+
+    createSectionHeader(name, imgPath) {
+        let headerContainer = document.createElement("div");
+        headerContainer.classList.add("sidebar-section-header", "container");
+        
+        let headerImage = document.createElement("img");
+        headerImage.setAttribute("src", imgPath);
+        
+        let headerText = document.createElement("h3");
+        headerText.innerText = name;
+
+        headerContainer.append(headerImage, headerText);
+        return headerContainer;
     }
 
     createProject(name, icon, parentContainer) {
