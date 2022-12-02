@@ -7,12 +7,24 @@
     --background-color: #52525b;
     --box-shadow-color: rgba(124, 124, 124, 0.185);
 
-    --topbar-padding: 16px;
+    --topbar-padding: 24px;
     font-family: "Roboto";
 }
 
 * {
     box-sizing: border-box;
+}
+
+button {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    border-radius: 500px;
+    background: var(--main-dark);
+    color: white;
+    white-space: pre;
 }
 
 body {
@@ -72,13 +84,6 @@ h1.topbar-title {
 }
 
 .topbar-buttons button {
-    font-size: 0.9rem;
-    padding: 10px 16px;
-    font-weight: 700;
-    border: none;
-    outline: none;
-    border-radius: 500px;
-    background: var(--main-dark);
     color: white;
 }
 
