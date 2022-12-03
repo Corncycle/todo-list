@@ -1,24 +1,35 @@
+import inboxSvg from "../../images/inbox.svg";
+import projectsSvg from "../../images/projects.svg"
+
 export class DOMSidebar {
     constructor() {
         this.root = document.querySelector(".sidebar.container");
         this.content = [];
+        this.generateSkeleton();
     };
 
     render() {
         this.content.forEach(elm => {
             this.root.appendChild(elm);
         });
+        for (const section in this.containers) {
+            for (const project in this.containersContent[section]) {
+                this.containers[section].append(this.containersContent[section][project]);
+            }
+        }
     }
 
     generateSkeleton() {
-        let _, inboxContainer, projectsContainer;
-        [_, inboxContainer] = this.createSection("Inbox", "../../images/inbox.svg");
-        this.content.push(_, inboxContainer);
+        let inboxTitle, projectsTitle, inboxContainer, projectsContainer;
+        [inboxTitle, inboxContainer] = this.createSection("Inbox", inboxSvg);
+        this.content.push(inboxTitle, inboxContainer);
 
-        [_, projectsContainer] = this.createSection("Projects", "../../images/projects.svg");
-        this.content.push(_, inboxContainer);
+        [projectsTitle, projectsContainer] = this.createSection("Projects", projectsSvg);
+        this.content.push(projectsTitle, projectsContainer);
 
+        this.userProjectsByName = {};
         this.containers = {"inbox": inboxContainer, "projects": projectsContainer};
+        this.containersContent = {"inbox": {}, "projects": {}};
     }
 
     createSection(name, imgPath) {
@@ -44,11 +55,28 @@ export class DOMSidebar {
         return headerContainer;
     }
 
-    createProject(name, icon, parentContainer) {
+    createProject(name, imgPath, section, eventHandler) {
+        let elementContainer = document.createElement("div");
+        elementContainer.classList.add("sidebar-section-project", "container");
+        
+        let elementImage = document.createElement("img");
+        elementImage.setAttribute("src", imgPath);
+        
+        let elementText = document.createElement("h4");
+        elementText.innerText = name;
+
+        elementContainer.append(elementImage, elementText);
+
+        this.containersContent[section][name] = elementContainer;
+        
+        elementContainer.addEventListener("click", e => {
+            eventHandler.clickProject(name);
+        });
+
+        return elementContainer;
     }
 
-    logMessage() {
-        console.log("You're logging here!");
-        console.log(DOMSidebar.sProperty);
+    removeProject(name) {
+        delete this.containersContent["projects"][name];
     }
 }

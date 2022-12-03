@@ -1,10 +1,6 @@
 import "./stylesheets/meyer-reset.css";
 import "./stylesheets/style.css";
 
-import {DOMSidebar} from "./scripts/dom/DOMSidebar.js";
+import { EventHandler } from "./scripts/EventHandler.js";
 
-console.log("Hello world");
-
-let s = new DOMSidebar();
-s.generateSkeleton();
-s.render();
+let eventHandler = new EventHandler();
