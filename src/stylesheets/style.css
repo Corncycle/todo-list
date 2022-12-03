@@ -84,6 +84,23 @@ body {
     flex-direction: column;
 }
 
+.sidebar-section-project.container, .sidebar-section-header.container {
+    padding: 3px;
+    border-radius: 8px;
+    cursor: default;
+    user-select: none;
+}
+
+.sidebar-section-header.container {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    border: 1px solid #4445;
+}
+
+.sidebar-section-project.container:hover {
+    background: #4443;
+}
+
 .main.container {
     flex: 1;
 }
@@ -106,6 +123,7 @@ body {
 h1.topbar-title {
     font-size: 2.5rem;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .topbar-buttons.container {

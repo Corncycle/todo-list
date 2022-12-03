@@ -6,6 +6,11 @@ export class ProjectsManager {
     }
 
     addProject(name) {
+        for (const project of this.projects) {
+            if (project.name === name) {
+                return false
+            }
+        }
         this.projects.push(new Project(name));
         return this.projects[this.projects.length - 1];
     }
