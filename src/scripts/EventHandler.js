@@ -1,4 +1,5 @@
 import { DOMSidebar } from "./dom/DOMSidebar.js";
+import { DOMMainContent } from "./dom/DOMMainContent.js";
 import { ProjectsManager } from "./internal/projectsManager.js";
 
 import starSvg from "../images/star.svg";
@@ -10,6 +11,7 @@ export class EventHandler {
     constructor() {
         this.projectsManager = new ProjectsManager();
         this.domSidebar = new DOMSidebar();
+        this.domMainContent = new DOMMainContent();
 
         this.addProject("Today", starSvg, "inbox");
         this.addProject("This Week", weekSvg, "inbox");
@@ -36,6 +38,7 @@ export class EventHandler {
     }
 
     clickProject(name) {
-        console.log("You clicked project " + name);
+        this.domSidebar.selectProject(name);
+        this.domMainContent.render(this.projectsManager.getProject(name));
     }
 }

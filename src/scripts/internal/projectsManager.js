@@ -23,4 +23,13 @@ export class ProjectsManager {
             }
         }
     }
+
+    getProject(name) {
+        for (let i = 0; i < this.projects.length; i++) {
+            if (this.projects[i].name === name) {
+                return this.projects[i]               
+            }
+        }
+        return false;
+    }
 }

@@ -17,6 +17,8 @@
 }
 
 button {
+    user-select: none;
+    cursor: pointer;
     font-size: 0.9rem;
     padding: 10px 16px;
     font-weight: 700;
@@ -35,7 +37,7 @@ body {
 
 .full-wrapper {
     width: 100%;
-    margin: 0px 60px;
+    margin: 0px clamp(20px, calc(20px + 20 * calc(1vw - 7px)), 100px);
     margin-top: 20px;
     border-radius: 8px 8px 0 0;
     overflow: hidden;
@@ -82,12 +84,13 @@ body {
 
 .sidebar-section.container {
     flex-direction: column;
+    gap: 2px;
+    cursor: pointer;
 }
 
 .sidebar-section-project.container, .sidebar-section-header.container {
     padding: 3px;
     border-radius: 8px;
-    cursor: default;
     user-select: none;
 }
 
@@ -97,8 +100,16 @@ body {
     border: 1px solid #4445;
 }
 
+.sidebar-section-project.container.selected {
+    background: #4445;
+}
+
+.sidebar-section-project.container:not(.selected):hover {
+    background: #4442;
+}
+
 .sidebar-section-project.container:hover {
-    background: #4443;
+    filter: brightness(0.2);
 }
 
 .main.container {
@@ -110,6 +121,7 @@ body {
     background: var(--main-light);
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
     padding: 0 var(--topbar-padding);
     box-shadow: 0 2px 4px 2px var(--box-shadow-color);
     z-index: 1;
@@ -137,4 +149,16 @@ h1.topbar-title {
 .main-content.container {
     flex: 1;
     background: var(--main-medium);
+    padding-left: 40px;
+    padding-top: 40px;
+}
+
+.main-content.title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.main-content.body {
+    color: #777;
 }

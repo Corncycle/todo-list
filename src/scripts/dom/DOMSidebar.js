@@ -76,6 +76,18 @@ export class DOMSidebar {
         return elementContainer;
     }
 
+    selectProject(name) {
+        for (const section in this.containers) {
+            for (const project in this.containersContent[section]) {
+                if (project === name) {
+                    this.containersContent[section][project].classList.add("selected");
+                } else {
+                    this.containersContent[section][project].classList.remove("selected");
+                }
+            }
+        }
+    }
+
     removeProject(name) {
         delete this.containersContent["projects"][name];
     }
