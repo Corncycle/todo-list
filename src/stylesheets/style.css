@@ -16,8 +16,24 @@
     box-sizing: border-box;
 }
 
-button {
+img {
     user-select: none;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    position: reltaive;
+    min-width: 1.5em;
+    height: 1.5em;
+    border: 2px solid gray;
+    border-radius: 6px;
+}
+
+input[type="checkbox"]:checked {
+    background: red;
+}
+
+button {
     cursor: pointer;
     font-size: 0.9rem;
     padding: 10px 16px;
@@ -67,6 +83,7 @@ body {
 .sidebar-section-header.container img, .sidebar-section-project.container img {
     width: 1.3em;
     height: 1.3em;
+    user-select: none;
 }
 
 .sidebar-section-header.container h3, .sidebar-section-project.container h4 {
@@ -91,7 +108,6 @@ body {
 .sidebar-section-project.container, .sidebar-section-header.container {
     padding: 3px;
     border-radius: 8px;
-    user-select: none;
 }
 
 .sidebar-section-header.container {
@@ -149,8 +165,7 @@ h1.topbar-title {
 .main-content.container {
     flex: 1;
     background: var(--main-medium);
-    padding-left: 40px;
-    padding-top: 40px;
+    padding: 40px;
 }
 
 .main-content.title {
@@ -161,4 +176,43 @@ h1.topbar-title {
 
 .main-content.body {
     color: #777;
+}
+
+.task-list.container {
+    max-width: 450px;
+}
+
+.task-header.container {
+    align-items: center;
+    gap: 0.3em;
+}
+
+.task-header.container img {
+    width: 1.5rem;
+}
+
+.task-header.title {
+    flex: 1;
+}
+
+.task-priority > * {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.task.container p {
+    padding-top: 0.2rem;
+    padding-left: 1.5rem;
+    color: #777;
+}
+
+.task-desc, .task-date {
+    font-size: 0.8rem;
+}
+
+.task-divider {
+    border-style: none;
+    border-top: 1px solid #DDDDDD;
+    margin: 6px 0;
+    width: 100%;
 }

@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.js",
-    //devtool: "inline-source-map",
-    mode: "production",
+    devtool: "inline-source-map",
+    mode: "development",
     devServer: {
         static: "./src"
     },
@@ -20,9 +20,13 @@ module.exports = {
                 use: ["style-loader", "css-loader"],
             },
             {
-                test: /\.svg$/i,
+                test: /Z\.svg$/i,
+                loader: 'svg-inline-loader',
+            },
+            {
+                test: /[^Z]\.svg$/i,
                 type: "asset/resource",
-            }
+            },
         ],
     },
     plugins: [

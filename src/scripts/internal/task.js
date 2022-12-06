@@ -5,5 +5,12 @@ export class Task {
         this.description = description;
         this.priority = priority;
         this.checked = checked;
+        this.id = Task.generateId();
+    }
+
+    static idGenerator = 0;
+    static generateId() {
+        this.idGenerator += 1;
+        return this.idGenerator;
     }
 }

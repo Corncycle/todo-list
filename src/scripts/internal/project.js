@@ -13,6 +13,7 @@ export class Project {
 
     addNew(name, date, description, priority, checked) {
         this.tasks.push(new Task(name, date, description, priority, checked));
+        console.log(this.tasks);
         return this.tasks[this.tasks.length - 1];
     }
 

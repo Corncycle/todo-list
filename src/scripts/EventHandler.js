@@ -18,6 +18,8 @@ export class EventHandler {
         this.addProject("All Tasks", viewListSvg, "inbox");
         this.addProject("Another Project", circleSvg, "projects");
         this.addProject("Yet Another Project", circleSvg, "projects");
+
+        this.clickProject("Today");
         this.domSidebar.render();
     }
 
@@ -38,7 +40,13 @@ export class EventHandler {
     }
 
     clickProject(name) {
+        this.currentProject = this.projectsManager.getProject(name);
         this.domSidebar.selectProject(name);
-        this.domMainContent.render(this.projectsManager.getProject(name));
+        this.domMainContent.render(this.currentProject);
+    }
+
+    addTask(name) {
+        this.currentProject.addNew(name, "today", null, "low", false);
+        this.domMainContent.render(this.currentProject);
     }
 }
