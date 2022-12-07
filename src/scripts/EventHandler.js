@@ -1,5 +1,6 @@
 import { DOMSidebar } from "./dom/DOMSidebar.js";
 import { DOMMainContent } from "./dom/DOMMainContent.js";
+import { DOMPrompts } from "./dom/DOMPrompts.js";
 import { ProjectsManager } from "./internal/projectsManager.js";
 
 import starSvg from "../images/star.svg";
@@ -12,6 +13,7 @@ export class EventHandler {
         this.projectsManager = new ProjectsManager();
         this.domSidebar = new DOMSidebar();
         this.domMainContent = new DOMMainContent();
+        this.domPrompts = new DOMPrompts(this);
 
         this.addProject("Today", starSvg, "inbox");
         this.addProject("This Week", weekSvg, "inbox");
@@ -45,8 +47,12 @@ export class EventHandler {
         this.domMainContent.render(this.currentProject);
     }
 
-    addTask(name) {
-        this.currentProject.addNew(name, "today", null, "low", false);
+    addTask(name, description, priority) {
+        this.currentProject.addNew(name, "today", description, priority, false);
         this.domMainContent.render(this.currentProject);
+    }
+
+    promptNewTask() {
+        this.domPrompts.buildNewTaskPrompt(this.currentProject, this.projectsManager.getUserProjects());
     }
 }

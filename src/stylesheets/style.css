@@ -8,8 +8,25 @@
     --background-color: #52525b;
     --box-shadow-color: rgba(124, 124, 124, 0.185);
 
+    /* colors for priorities */
+    --pHigh: tomato;
+    --pMed: plum;
+    --pLow: royalblue;
+
     --topbar-padding: 24px;
     font-family: "Roboto";
+}
+
+.p-high {
+    background: var(--pHigh);
+}
+
+.p-medium {
+    background: var(--pMed);
+}
+
+.p-low {
+    background: var(--pLow);
 }
 
 * {
@@ -22,7 +39,7 @@ img {
 
 input[type="checkbox"] {
     appearance: none;
-    position: reltaive;
+    position: relative;
     min-width: 1.5em;
     height: 1.5em;
     border: 2px solid gray;
@@ -33,22 +50,58 @@ input[type="checkbox"]:checked {
     background: red;
 }
 
+input[type="text"], input[type="date"], select {
+    background: var(--main-light);
+    padding: 6px;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    border: 1px solid #d1d4d8;
+    width: 100%;
+}
+
+input[type="text"]:focus, 
+input[type="text"]:focus-visible, 
+input[type="date"]:focus,
+input[type="date"]:focus-visible,
+select:focus,
+select:focus-visible {
+    outline: 1px solid rgb(109, 156, 255);
+    box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.096);
+}
+
+input[type="date"] {
+    width: 9.5em;
+    min-width: 9.5em;
+}
+
+select {
+    max-width: 15em;
+    width: auto;
+}
+
 button {
+    box-sizing: border-box;
     cursor: pointer;
     font-size: 0.9rem;
-    padding: 10px 16px;
+    padding: 7px 13px;
     font-weight: 700;
-    border: none;
     outline: none;
     border-radius: 500px;
     background: var(--accent-dark);
+    border: 3px solid var(--accent-dark);
     color: white;
     white-space: pre;
+}
+
+button:hover {
+    color: var(--accent-dark);
+    background: var(--main-light);
 }
 
 body {
     min-height: 100vh;
     background: var(--background-color);
+    position: relative;
 }
 
 .full-wrapper {
@@ -158,10 +211,6 @@ h1.topbar-title {
     gap: 20px;
 }
 
-.topbar-buttons button {
-    color: white;
-}
-
 .main-content.container {
     flex: 1;
     background: var(--main-medium);
@@ -193,21 +242,35 @@ h1.topbar-title {
 
 .task-header.title {
     flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.task-priority > * {
+.task-priority {
     width: 1.5rem;
     height: 1.5rem;
+    -webkit-mask: url(../images/filled-circle.svg) 0 0 / 100% 100%;
+    mask: url(../images/filled-circle.svg) no-repeat center;
 }
 
 .task.container p {
-    padding-top: 0.2rem;
+    padding-top: 0.2em;
     padding-left: 1.5rem;
     color: #777;
+    width: calc(100%);
 }
 
 .task-desc, .task-date {
     font-size: 0.8rem;
+}
+
+.task-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .task-divider {
@@ -215,4 +278,42 @@ h1.topbar-title {
     border-top: 1px solid #DDDDDD;
     margin: 6px 0;
     width: 100%;
+}
+
+.prompt-wrapper {
+    z-index: 2;
+}
+
+.prompt-remover {
+    position: absolute;
+    backdrop-filter: brightness(85%);
+    inset: 0;
+}
+
+.prompt.container {
+    background: var(--main-dark);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 4px 4px var(--box-shadow-color);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+}
+
+.prompt-form {
+    gap: 10px;
+}
+
+.prompt-row {
+    gap: 10px;
+}
+
+.prompt-final-row {
+    justify-content: flex-end;
+}
+
+select.priority {
+    width: 10rem;
 }

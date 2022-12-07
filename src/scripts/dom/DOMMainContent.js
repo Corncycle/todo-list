@@ -1,5 +1,3 @@
-import circleSvg from "../../images/filled-circle-Z.svg";
-
 export class DOMMainContent {
     constructor() {
         this.specialProjects = ["Today", "This Week", "All Tasks"];
@@ -49,9 +47,9 @@ export class DOMMainContent {
         let date = document.createElement("span");
         date.innerText = task.date;
         date.classList.add("task-date")
-        let priority = document.createElement("svg");
-        priority.innerHTML = circleSvg;
+        let priority = document.createElement("div");
         priority.classList.add("task-priority");
+        priority.classList.add("p-" + task.priority);
         header.append(checkBox, title, date, priority);
         elm.append(header);
         
