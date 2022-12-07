@@ -15,5 +15,6 @@ taskButton.addEventListener("click", e => { eventHandler.promptNewTask(); });
 
 initialActions();
 function initialActions() {
+    eventHandler.clickProject("Another Project");
     eventHandler.promptNewTask();
 }

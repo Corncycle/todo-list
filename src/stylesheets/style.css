@@ -74,6 +74,10 @@ input[type="date"] {
     min-width: 9.5em;
 }
 
+input[placeholder="Task Name"] {
+    max-width: 12em;
+}
+
 select {
     max-width: 15em;
     width: auto;
@@ -292,7 +296,7 @@ h1.topbar-title {
 
 .prompt.container {
     background: var(--main-dark);
-    padding: 20px;
+    padding: 40px 20px;
     border-radius: 8px;
     box-shadow: 0 0 4px 4px var(--box-shadow-color);
     position: absolute;

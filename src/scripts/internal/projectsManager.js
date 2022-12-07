@@ -38,7 +38,7 @@ export class ProjectsManager {
     }
 
     getUserProjects(name) {
-        let omit = ["Today", "This Week", "All Tasks"]
+        let omit = Project.specialProjects;
         return this._projects.filter(proj => !omit.includes(proj.name));
     }
 }

@@ -33,15 +33,20 @@ export class DOMPrompts {
         prioSelector.classList.add("priority");
         rows[0].append(taskInput, dateInput, prioSelector);
         let descInput = this.makeTextInput("Description (optional)");
-        rows[1].append(descInput,
-            this.makeDropdownIput(true, null, "Uncategorized", ...(userProjects.map(proj => proj.name))));
+        let projectInput = this.makeDropdownIput(true, null, "Uncategorized", ...(userProjects.map(proj => proj.name)));
+        projectInput.childNodes.forEach(child => {
+            if (child.innerText == currentProject.name) {
+                child.setAttribute("selected", "");
+            }
+        });
+        rows[1].append(descInput, projectInput);
         let confirmButton = this.makeButton("Add Task");
         confirmButton.addEventListener("click", e => {
             if (taskInput.validity.valid && 
                 dateInput.validity.valid && 
                 prioSelector.validity.valid) {
                 e.preventDefault();
-                this.eventHandler.addTask(taskInput.value, descInput.value, prioSelector.value);
+                this.eventHandler.addTask(taskInput.value, dateInput.value, descInput.value, prioSelector.value);
                 wrapper.remove();
             }
         });

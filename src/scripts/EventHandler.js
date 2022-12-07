@@ -47,8 +47,8 @@ export class EventHandler {
         this.domMainContent.render(this.currentProject);
     }
 
-    addTask(name, description, priority) {
-        this.currentProject.addNew(name, "today", description, priority, false);
+    addTask(name, date, description, priority) {
+        this.currentProject.addNew(name, date, description, priority, false);
         this.domMainContent.render(this.currentProject);
     }
 

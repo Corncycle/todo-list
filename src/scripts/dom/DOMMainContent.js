@@ -1,3 +1,5 @@
+import { relativeTimeString } from "../util.js";
+
 export class DOMMainContent {
     constructor() {
         this.specialProjects = ["Today", "This Week", "All Tasks"];
@@ -45,7 +47,7 @@ export class DOMMainContent {
         title.innerText = task.name;
         title.classList.add("task-header", "title");
         let date = document.createElement("span");
-        date.innerText = task.date;
+        date.innerText = relativeTimeString(task.date);
         date.classList.add("task-date")
         let priority = document.createElement("div");
         priority.classList.add("task-priority");
