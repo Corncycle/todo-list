@@ -12,11 +12,6 @@ export class DOMSidebar {
         this.content.forEach(elm => {
             this.root.appendChild(elm);
         });
-        for (const section in this.containers) {
-            for (const project in this.containersContent[section]) {
-                this.containers[section].append(this.containersContent[section][project]);
-            }
-        }
     }
 
     generateSkeleton() {
@@ -29,7 +24,6 @@ export class DOMSidebar {
 
         this.userProjectsByName = {};
         this.containers = {"inbox": inboxContainer, "projects": projectsContainer};
-        this.containersContent = {"inbox": {}, "projects": {}};
     }
 
     createSection(name, imgPath) {
@@ -58,6 +52,7 @@ export class DOMSidebar {
     createProject(name, imgPath, section, eventHandler) {
         let elementContainer = document.createElement("div");
         elementContainer.classList.add("sidebar-section-project", "container");
+        elementContainer.setAttribute("data-name", name);
         
         let elementImage = document.createElement("img");
         elementImage.setAttribute("src", imgPath);
@@ -66,23 +61,23 @@ export class DOMSidebar {
         elementText.innerText = name;
 
         elementContainer.append(elementImage, elementText);
-
-        this.containersContent[section][name] = elementContainer;
         
         elementContainer.addEventListener("click", e => {
             eventHandler.clickProject(name);
         });
+
+        this.containers[section].append(elementContainer);
 
         return elementContainer;
     }
 
     selectProject(name) {
         for (const section in this.containers) {
-            for (const project in this.containersContent[section]) {
-                if (project === name) {
-                    this.containersContent[section][project].classList.add("selected");
+            for (const project of this.containers[section].children) {
+                if (project.getAttribute("data-name") === name) {
+                    project.classList.add("selected");
                 } else {
-                    this.containersContent[section][project].classList.remove("selected");
+                    project.classList.remove("selected");
                 }
             }
         }

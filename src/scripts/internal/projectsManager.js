@@ -15,8 +15,7 @@ export class ProjectsManager {
                 return false
             }
         }
-        this._projects.push(new Project(name));
-        console.log(this.projects);
+        this._projects.push(new Project(name, this));
         return this._projects[this._projects.length - 1];
     }
 
@@ -38,8 +37,21 @@ export class ProjectsManager {
         return false;
     }
 
-    getUserProjects(name) {
+    getInboxProjects() {
+        let names = Project.specialProjects;
+        return this._projects.filter(proj => names.includes(proj.name));
+    }
+
+    getUserProjects() {
         let omit = Project.specialProjects;
         return this._projects.filter(proj => !omit.includes(proj.name));
+    }
+    
+    getAllTasks() {
+        let tasks = [];
+        this.getUserProjects().forEach(proj => {
+            tasks = tasks.concat(proj.tasks);
+        });
+        return tasks;
     }
 }

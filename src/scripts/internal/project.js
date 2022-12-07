@@ -1,15 +1,24 @@
 import { Task } from "./task.js";
+import { todayString } from "../util.js";
 
 export class Project {
-    constructor(name) {
+    constructor(name, projectsManager) {
         this.name = name;
         this._tasks = [];
+        this.projectsManager = projectsManager;
     }
 
     static specialProjects = ["Today", "This Week", "All Tasks", "Uncategorized"];
 
     get tasks() {
         if (Project.specialProjects.includes(this.name)) {
+            let allTasks = this.projectsManager.getAllTasks();
+            if (this.name === "All Tasks") {
+                return allTasks;
+            } else if (this.name === "Today") {
+                let allTasks = this.projectsManager.getAllTasks();
+                return allTasks.filter(task => task.date.toLocaleDateString("en-CA") === todayString());
+            }
             return [];
         }
         return this._tasks;

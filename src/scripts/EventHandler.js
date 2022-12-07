@@ -65,7 +65,6 @@ export class EventHandler {
         if (Project.specialProjects.includes(name)) {
             return "You cannot create a project with that name.";
         } else if (this.projectsManager.projects.some(proj => {return proj.name == name})) {
-            console.log("YEAHH");
             return "There is already a project with that name!";
         }
         return null;

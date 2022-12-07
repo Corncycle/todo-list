@@ -23,15 +23,16 @@ export class DOMMainContent {
     createTasksElement(project) {
         let elm = document.createElement("div");
         elm.classList.add("task-list", "container", "vertical");
-        if (project.tasks.length == 0) {
+        let tasks = project.tasks;
+        if (tasks.length == 0) {
             elm.innerText = "No tasks assigned yet.";
             return elm;
         }
-        for (let i = 0; i < project.tasks.length; i++) {
+        for (let i = 0; i < tasks.length; i++) {
             if (i > 0) {
                 elm.append(this.createTaskDivider());
             }
-            elm.appendChild(this.createTaskElement(project.tasks[i]));
+            elm.appendChild(this.createTaskElement(tasks[i]));
         }
         return elm;
     }

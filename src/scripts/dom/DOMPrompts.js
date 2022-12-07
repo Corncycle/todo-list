@@ -15,13 +15,22 @@ export class DOMPrompts {
         });
 
         let container = document.createElement("div");
-        container.classList.add("prompt", "container");
+        container.classList.add("prompt", "container", "vertical");
         wrapper.append(remover, container)
         return [wrapper, container];
     }
 
+    buildPromptTitle(name) {
+        let title = document.createElement("h2");
+        title.innerText = name;
+        title.classList.add("prompt-title");
+
+        return title;
+    }
+
     buildNewProjectPrompt() {
         let [wrapper, container] = this.buildPromptBase();
+        container.append(this.buildPromptTitle("New Project"));
 
         let form = document.createElement("form");
         form.classList.add("prompt-form", "container");
@@ -48,6 +57,7 @@ export class DOMPrompts {
 
     buildNewTaskPrompt(currentProject, userProjects) {
         let [wrapper, container] = this.buildPromptBase();
+        container.append(this.buildPromptTitle("New Task"));
 
         let form = document.createElement("form");
         form.classList.add("prompt-form", "container", "vertical");
