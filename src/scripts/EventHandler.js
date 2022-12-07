@@ -12,7 +12,7 @@ export class EventHandler {
     constructor() {
         this.projectsManager = new ProjectsManager();
         this.domSidebar = new DOMSidebar();
-        this.domMainContent = new DOMMainContent();
+        this.domMainContent = new DOMMainContent(this);
         this.domPrompts = new DOMPrompts(this);
 
         this.addProject("Today", starSvg, "inbox");
@@ -49,6 +49,11 @@ export class EventHandler {
 
     addTask(name, date, description, priority) {
         this.currentProject.addNew(name, date, description, priority, false);
+        this.domMainContent.render(this.currentProject);
+    }
+
+    deleteTask(task) {
+        this.currentProject.remove(task);
         this.domMainContent.render(this.currentProject);
     }
 

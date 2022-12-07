@@ -1,9 +1,10 @@
 import { relativeTimeString } from "../util.js";
 
 export class DOMMainContent {
-    constructor() {
+    constructor(eventHandler) {
         this.specialProjects = ["Today", "This Week", "All Tasks"];
         this.root = document.querySelector(".main-content.container");
+        this.eventHandler = eventHandler;
     }
 
     render(project) {
@@ -54,13 +55,25 @@ export class DOMMainContent {
         priority.classList.add("p-" + task.priority);
         header.append(checkBox, title, date, priority);
         elm.append(header);
-        
         if (task.description) {
             let desc = document.createElement("p");
             desc.innerText = task.description;
             desc.classList.add("task-desc");
             elm.append(desc);
         }
+
+        elm.addEventListener("mouseenter", e => {
+            priority.classList.add("hover");
+        });
+
+        elm.addEventListener("mouseleave", e => {
+            priority.classList.remove("hover");
+        });
+
+        priority.addEventListener("click", e => {
+            this.eventHandler.deleteTask(task);
+        });
+
         return elm;
     }
 

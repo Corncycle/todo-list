@@ -16,5 +16,7 @@ taskButton.addEventListener("click", e => { eventHandler.promptNewTask(); });
 initialActions();
 function initialActions() {
     eventHandler.clickProject("Another Project");
-    eventHandler.promptNewTask();
+    //eventHandler.promptNewTask();
+    eventHandler.addTask("Wanikani", "today", "Describe the project here", "high");
+    eventHandler.addTask("Laundry", "today", null, "medium");
 }

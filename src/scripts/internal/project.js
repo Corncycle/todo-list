@@ -28,7 +28,7 @@ export class Project {
     remove(task) {
         let index = this._tasks.indexOf(task);
         if (index != -1) {
-            this._tasks.pop(index);
+            this._tasks.splice(index, 1);
         }
         return task;
     }

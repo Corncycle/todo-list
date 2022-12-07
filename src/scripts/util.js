@@ -10,8 +10,6 @@ export function tomorrowString() {
 }
 
 export function relativeTimeString(date) {
-    console.log("trying to make a relative time string for");
-    console.log(date);
     if (date.toLocaleDateString("en-CA") == todayString()) return "today";
     if (date.toLocaleDateString("en-CA") == tomorrowString()) return "tomorrow";
     let d = new Date();
