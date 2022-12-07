@@ -16,6 +16,7 @@ export class ProjectsManager {
             }
         }
         this._projects.push(new Project(name));
+        console.log(this.projects);
         return this._projects[this._projects.length - 1];
     }
 

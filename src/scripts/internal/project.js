@@ -6,7 +6,7 @@ export class Project {
         this._tasks = [];
     }
 
-    static specialProjects = ["Today", "This Week", "All Tasks"];
+    static specialProjects = ["Today", "This Week", "All Tasks", "Uncategorized"];
 
     get tasks() {
         if (Project.specialProjects.includes(this.name)) {

@@ -4,7 +4,7 @@ export class DOMPrompts {
         this.eventHandler = eventHandler;
     }
 
-    buildNewTaskPrompt(currentProject, userProjects) {
+    buildPromptBase() {
         let wrapper = document.createElement("div");
         wrapper.classList.add("prompt-wrapper");
 
@@ -16,6 +16,38 @@ export class DOMPrompts {
 
         let container = document.createElement("div");
         container.classList.add("prompt", "container");
+        wrapper.append(remover, container)
+        return [wrapper, container];
+    }
+
+    buildNewProjectPrompt() {
+        let [wrapper, container] = this.buildPromptBase();
+
+        let form = document.createElement("form");
+        form.classList.add("prompt-form", "container");
+        container.append(form);
+
+        let titleInput = this.makeTextInput("Project Name", true);
+        let confirmButton = this.makeButton("Add Project");
+        form.append(titleInput, confirmButton);
+        confirmButton.addEventListener("click", e => {
+            if (titleInput.validity.valid) {
+                e.preventDefault();
+                let issue = this.eventHandler.contestProjectName(titleInput.value);
+                if (issue) {
+                    console.log(issue);
+                } else {
+                    this.eventHandler.addProject(titleInput.value, null, "projects");
+                    wrapper.remove();
+                }
+            }
+        });
+
+        this.root.append(wrapper);
+    }
+
+    buildNewTaskPrompt(currentProject, userProjects) {
+        let [wrapper, container] = this.buildPromptBase();
 
         let form = document.createElement("form");
         form.classList.add("prompt-form", "container", "vertical");
@@ -29,11 +61,11 @@ export class DOMPrompts {
         }
         let taskInput = this.makeTextInput("Task Name", true)
         let dateInput = this.makeDateInput("Date", true)
-        let prioSelector = this.makeDropdownIput(true, "--Priority--", "High", "Medium", "Low");
+        let prioSelector = this.makeDropdownIput(true, true, "--Priority--", "High", "Medium", "Low");
         prioSelector.classList.add("priority");
         rows[0].append(taskInput, dateInput, prioSelector);
         let descInput = this.makeTextInput("Description (optional)");
-        let projectInput = this.makeDropdownIput(true, null, "Uncategorized", ...(userProjects.map(proj => proj.name)));
+        let projectInput = this.makeDropdownIput(true, false, null, "Uncategorized", ...(userProjects.map(proj => proj.name)));
         projectInput.childNodes.forEach(child => {
             if (child.innerText == currentProject.name) {
                 child.setAttribute("selected", "");
@@ -46,14 +78,13 @@ export class DOMPrompts {
                 dateInput.validity.valid && 
                 prioSelector.validity.valid) {
                 e.preventDefault();
-                this.eventHandler.addTask(taskInput.value, dateInput.value, descInput.value, prioSelector.value);
+                this.eventHandler.addTask(projectInput.value, taskInput.value, dateInput.value, descInput.value, prioSelector.value);
                 wrapper.remove();
             }
         });
         rows[2].append(confirmButton);
         rows[2].classList.add("prompt-final-row");
         
-        wrapper.append(remover, container)
         this.root.append(wrapper);
     }
 
@@ -82,7 +113,7 @@ export class DOMPrompts {
         return elm;
     }
 
-    makeDropdownIput(required, text, ...options) {
+    makeDropdownIput(required, makeLowercase, text, ...options) {
         let elm = document.createElement("select");
         if (text) {
             let defOpt = document.createElement("option");
@@ -92,7 +123,11 @@ export class DOMPrompts {
         }
         for (let st of options) {
             let opt = document.createElement("option");
-            opt.setAttribute("value", st.toLowerCase());
+            if (makeLowercase) {
+                opt.setAttribute("value", st.toLowerCase());
+            } else {
+                opt.setAttribute("value", st);
+            }
             opt.innerText = st;
             elm.append(opt);
         }
