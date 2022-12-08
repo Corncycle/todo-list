@@ -20,11 +20,13 @@ export class EventHandler {
         this.addProject("Today", starSvg, "inbox");
         this.addProject("This Week", weekSvg, "inbox");
         this.addProject("All Tasks", viewListSvg, "inbox");
-        this.addProject("Another Project", circleSvg, "projects");
-        this.addProject("Yet Another Project", circleSvg, "projects");
 
         this.clickProject("Today");
         this.domSidebar.render();
+    }
+
+    makeSampleProject() {
+        this.addProject("Sample Project", circleSvg, "projects");
     }
 
     addProject(name, imgPath, section) {
@@ -40,9 +42,10 @@ export class EventHandler {
     }
 
     removeProject(name) {
-        this.projectsManager.removeProject(name);
         this.domSidebar.removeProject(name);
+        this.projectsManager.removeProject(name);
         this.domSidebar.render();
+        this.clickProject("Today");
     }
 
     clickProject(name) {
@@ -57,7 +60,7 @@ export class EventHandler {
     }
 
     deleteTask(task) {
-        this.currentProject.remove(task);
+        task.project.remove(task);
         this.domMainContent.render(this.currentProject);
     }
 
@@ -67,7 +70,7 @@ export class EventHandler {
         } else if (this.projectsManager.projects.some(proj => {return proj.name == name})) {
             return "There is already a project with that name!";
         }
-        return null;
+        return "";
     }
 
     promptNewProject() {

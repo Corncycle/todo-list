@@ -1,5 +1,5 @@
 export class Task {
-    constructor(name, date, description, priority, checked) {
+    constructor(project, name, date, description, priority, checked) {
         this.name = name;
         // https://stackoverflow.com/questions/7556591/is-the-javascript-date-object-always-one-day-off
         this.date = new Date(date.replace(/-/g, '\/'));
@@ -7,6 +7,7 @@ export class Task {
         this.priority = priority;
         this.checked = checked;
         this.id = Task.generateId();
+        this.project = project;
     }
 
     static idGenerator = 0;

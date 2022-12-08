@@ -22,13 +22,15 @@ export class ProjectsManager {
     removeProject(name) {
         for (let i = 0; i < this._projects.length; i++) {
             if (this._projects[i].name === name) {
-                this._projects.pop(i);
+                this._projects.splice(i, 1);
                 return
             }
         }
     }
 
     getProject(name) {
+        console.log("looking for " + name + " in ");
+        console.log(this._projects);
         for (let i = 0; i < this._projects.length; i++) {
             if (this._projects[i].name === name) {
                 return this._projects[i]               
@@ -49,7 +51,11 @@ export class ProjectsManager {
     
     getAllTasks() {
         let tasks = [];
-        this.getUserProjects().forEach(proj => {
+        let projectsWithTasks = this.getUserProjects();
+        projectsWithTasks.concat([this.getProject("Uncategorized")]);
+        let uncat = this.getProject("Uncategorized");
+        projectsWithTasks = projectsWithTasks.concat([uncat]);
+        projectsWithTasks.forEach(proj => {
             tasks = tasks.concat(proj.tasks);
         });
         return tasks;

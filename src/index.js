@@ -17,9 +17,10 @@ taskButton.addEventListener("click", e => { eventHandler.promptNewTask(); });
 
 initialActions();
 function initialActions() {
-    eventHandler.clickProject("Another Project");
-    //eventHandler.promptNewTask();
-    eventHandler.addTask("Another Project", "Wanikani", todayString(), "Describe the project here", "high");
-    eventHandler.addTask("Another Project", "Laundry", tomorrowString(), null, "medium");
-    //eventHandler.addTask("Another Project", "A task far in the future", "2022-12-25", null, "high");
+    eventHandler.makeSampleProject();
+
+    eventHandler.addTask("Sample Project", "Make Dinner", todayString(), "Describe the project here", "high");
+    eventHandler.addTask("Sample Project", "Laundry", tomorrowString(), null, "medium");
+    eventHandler.addTask("Sample Project", "Work Meeting", "2022-12-15", "Held at 2pm, should take about 1 hour", "high");
+    eventHandler.addTask("Uncategorized", "An Uncategorized Task", todayString(), "This task is not categorized under any particular project.", "low");
 }

@@ -1,4 +1,5 @@
 import { relativeTimeString } from "../util.js";
+import { Project } from "../internal/project.js";
 
 export class DOMMainContent {
     constructor(eventHandler) {
@@ -8,16 +9,28 @@ export class DOMMainContent {
     }
 
     render(project) {
+        console.log("let's render " + project.name);
         let titleElement = this.createTitleElement(project);
         let tasksElement = this.createTasksElement(project);
         this.root.replaceChildren(titleElement, tasksElement);
     }
 
     createTitleElement(project) {
+        let wrapper = document.createElement("div");
+        wrapper.classList.add("main-content-wrapper", "container");
         let elm = document.createElement("h2");
         elm.classList.add("main-content", "title");
         elm.innerText = project.name;
-        return elm;
+        wrapper.append(elm)
+        if (!Project.specialProjects.includes(project.name)) {
+            let button = document.createElement("button");
+            button.classList.add("project-title-button");
+            wrapper.append(button);
+            button.addEventListener("click", e => {
+                this.eventHandler.removeProject(project.name);
+            });
+        }
+        return wrapper;
     }
 
     createTasksElement(project) {
@@ -65,14 +78,20 @@ export class DOMMainContent {
 
         elm.addEventListener("mouseenter", e => {
             priority.classList.add("hover");
+            date.innerText = task.project.name;
         });
 
         elm.addEventListener("mouseleave", e => {
             priority.classList.remove("hover");
+            date.innerText = relativeTimeString(task.date);
         });
 
         priority.addEventListener("click", e => {
             this.eventHandler.deleteTask(task);
+        });
+
+        checkBox.addEventListener("click", e => {
+            elm.classList.toggle("completed");
         });
 
         return elm;

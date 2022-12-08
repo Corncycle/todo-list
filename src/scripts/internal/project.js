@@ -1,5 +1,5 @@
 import { Task } from "./task.js";
-import { todayString } from "../util.js";
+import { todayString, getEndOfWeekDate, getTodayDate } from "../util.js";
 
 export class Project {
     constructor(name, projectsManager) {
@@ -11,13 +11,16 @@ export class Project {
     static specialProjects = ["Today", "This Week", "All Tasks", "Uncategorized"];
 
     get tasks() {
-        if (Project.specialProjects.includes(this.name)) {
+        if (Project.specialProjects.includes(this.name) && this.name != "Uncategorized") {
             let allTasks = this.projectsManager.getAllTasks();
             if (this.name === "All Tasks") {
                 return allTasks;
             } else if (this.name === "Today") {
-                let allTasks = this.projectsManager.getAllTasks();
                 return allTasks.filter(task => task.date.toLocaleDateString("en-CA") === todayString());
+            } else if (this.name === "This Week") {
+                let todayDate = getTodayDate();
+                let eowDate = getEndOfWeekDate();
+                return allTasks.filter(task => task.date >= todayDate && task.date <= eowDate)
             }
             return [];
         }
@@ -30,7 +33,7 @@ export class Project {
     }
 
     addNew(name, date, description, priority, checked) {
-        this._tasks.push(new Task(name, date, description, priority, checked));
+        this._tasks.push(new Task(this, name, date, description, priority, checked));
         return this._tasks[this._tasks.length - 1];
     }
 

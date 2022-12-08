@@ -9,6 +9,19 @@ export function tomorrowString() {
     return d.toLocaleDateString("en-CA");
 }
 
+export function getTodayDate() {
+    return new Date(todayString().replace(/-/g, '\/'));
+}
+
+export function getEndOfWeekDate() {
+    let d = new Date();
+    while (d.getDay() < 6) {
+        d.setDate(d.getDate() + 1);
+    }
+    let extra = new Date();
+    return d;
+}
+
 export function relativeTimeString(date) {
     if (date.toLocaleDateString("en-CA") == todayString()) return "today";
     if (date.toLocaleDateString("en-CA") == tomorrowString()) return "tomorrow";

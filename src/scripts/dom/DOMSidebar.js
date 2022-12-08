@@ -84,6 +84,10 @@ export class DOMSidebar {
     }
 
     removeProject(name) {
-        delete this.containersContent["projects"][name];
+        for (let elm of this.containers["projects"].children) {
+            if (elm.getAttribute("data-name") === name) {
+                this.containers["projects"].removeChild(elm);
+            }
+        }
     }
 }

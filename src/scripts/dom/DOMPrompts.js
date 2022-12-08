@@ -39,13 +39,16 @@ export class DOMPrompts {
         let titleInput = this.makeTextInput("Project Name", true);
         let confirmButton = this.makeButton("Add Project");
         form.append(titleInput, confirmButton);
+        titleInput.addEventListener("input", e => {
+            let issue = this.eventHandler.contestProjectName(titleInput.value);
+            titleInput.setCustomValidity(issue);
+        });
+
         confirmButton.addEventListener("click", e => {
             if (titleInput.validity.valid) {
                 e.preventDefault();
                 let issue = this.eventHandler.contestProjectName(titleInput.value);
-                if (issue) {
-                    console.log(issue);
-                } else {
+                if (!issue) {
                     this.eventHandler.addProject(titleInput.value, null, "projects");
                     wrapper.remove();
                 }
@@ -75,7 +78,10 @@ export class DOMPrompts {
         prioSelector.classList.add("priority");
         rows[0].append(taskInput, dateInput, prioSelector);
         let descInput = this.makeTextInput("Description (optional)");
-        let projectInput = this.makeDropdownIput(true, false, null, "Uncategorized", ...(userProjects.map(proj => proj.name)));
+        let projectNames = userProjects.map(proj => proj.name);
+        projectNames = projectNames.concat(["Uncategorized"]);
+        console.log(projectNames);
+        let projectInput = this.makeDropdownIput(true, false, "--Project--", ...projectNames);
         projectInput.childNodes.forEach(child => {
             if (child.innerText == currentProject.name) {
                 child.setAttribute("selected", "");
@@ -86,7 +92,8 @@ export class DOMPrompts {
         confirmButton.addEventListener("click", e => {
             if (taskInput.validity.valid && 
                 dateInput.validity.valid && 
-                prioSelector.validity.valid) {
+                prioSelector.validity.valid &&
+                projectInput.validity.valid) {
                 e.preventDefault();
                 this.eventHandler.addTask(projectInput.value, taskInput.value, dateInput.value, descInput.value, prioSelector.value);
                 wrapper.remove();
