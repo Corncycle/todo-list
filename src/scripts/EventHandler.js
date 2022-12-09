@@ -7,26 +7,38 @@ import { Project } from "./internal/project.js";
 import starSvg from "../images/star.svg";
 import weekSvg from "../images/week.svg";
 import viewListSvg from "../images/view-list.svg";
-import circleSvg from "../images/circle.svg";
+
+import { stringify } from "flatted/esm";
 
 export class EventHandler {
-    constructor() {
-        this.projectsManager = new ProjectsManager();
-        this.domSidebar = new DOMSidebar();
-        this.domMainContent = new DOMMainContent(this);
-        this.domPrompts = new DOMPrompts(this);
+    constructor(existingHandler) {
+        if (existingHandler) {
+            this.projectsManager = new ProjectsManager(existingHandler.projectsManager);
+            this.domSidebar = new DOMSidebar(this);
+            this.domMainContent = new DOMMainContent(this);
+            this.domPrompts = new DOMPrompts(this);
+        } else {
+            this.projectsManager = new ProjectsManager();
+            this.domSidebar = new DOMSidebar(this);
+            this.domMainContent = new DOMMainContent(this);
+            this.domPrompts = new DOMPrompts(this);
 
-        this.addProject("Uncategorized", null, "hidden");
-        this.addProject("Today", starSvg, "inbox");
-        this.addProject("This Week", weekSvg, "inbox");
-        this.addProject("All Tasks", viewListSvg, "inbox");
+            this.addProject("Uncategorized", null, "hidden");
+            this.addProject("Today", starSvg, "inbox");
+            this.addProject("This Week", weekSvg, "inbox");
+            this.addProject("All Tasks", viewListSvg, "inbox");
+        }
 
         this.clickProject("Today");
-        this.domSidebar.render();
+        this.domSidebar.render(this.projectsManager);
     }
 
     makeSampleProject() {
-        this.addProject("Sample Project", circleSvg, "projects");
+        this.addProject("Sample Project", null, "projects");
+    }
+
+    updateLocalStorage() {
+        localStorage.setItem("eventHandler", stringify(this));
     }
 
     addProject(name, imgPath, section) {
@@ -37,15 +49,16 @@ export class EventHandler {
         if (name === "Uncategorized") {
             return;
         }
-        this.domSidebar.createProject(name, imgPath || circleSvg, section, this);
-        this.domSidebar.render();
+        this.domSidebar.render(this.projectsManager);
+        this.updateLocalStorage();
     }
 
     removeProject(name) {
         this.domSidebar.removeProject(name);
         this.projectsManager.removeProject(name);
-        this.domSidebar.render();
+        this.domSidebar.render(this.projectsManager);
         this.clickProject("Today");
+        this.updateLocalStorage();
     }
 
     clickProject(name) {
@@ -57,11 +70,13 @@ export class EventHandler {
     addTask(project, name, date, description, priority) {
         this.projectsManager.getProject(project).addNew(name, date, description, priority, false);
         this.domMainContent.render(this.currentProject);
+        this.updateLocalStorage();
     }
 
     deleteTask(task) {
         task.project.remove(task);
         this.domMainContent.render(this.currentProject);
+        this.updateLocalStorage();
     }
 
     contestProjectName(name) {

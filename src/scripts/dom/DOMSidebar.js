@@ -1,16 +1,52 @@
 import inboxSvg from "../../images/inbox.svg";
 import projectsSvg from "../../images/projects.svg"
+import { Project } from "../internal/project.js";
+
+import starSvg from "../../images/star.svg";
+import weekSvg from "../../images/week.svg";
+import viewListSvg from "../../images/view-list.svg";
+import circleSvg from "../../images/circle.svg";
 
 export class DOMSidebar {
-    constructor() {
+    constructor(eventHandler) {
         this.root = document.querySelector(".sidebar.container");
-        this.content = [];
+        this.content = []
+        this.eventHandler = eventHandler;
         this.generateSkeleton();
+    }
+
+    static specialImages = {
+        "Today": starSvg,
+        "This Week": weekSvg,
+        "All Tasks": viewListSvg,
     };
 
-    render() {
+    render(projectsManager) {
+        for (let cont in this.containers) {
+            let c = this.containers[cont];
+            while (c.firstChild) {
+                c.removeChild(c.firstChild);
+            }
+        }
+        projectsManager.projects.forEach(proj => {
+            if (proj.name != "Uncategorized") {
+                if (Project.specialProjects.includes(proj.name)) {
+                    let projElm = this.createProject(proj.name, DOMSidebar.specialImages[proj.name], "inbox", this.eventHandler);
+                    this.containers["inbox"].append(projElm);
+                    if (proj.name == this.selectectedProject) {
+                        projElm.classList.add("selected");
+                    }
+                } else {
+                    let projElm = this.createProject(proj.name, circleSvg, "projects", this.eventHandler);
+                    this.containers["projects"].append(projElm);
+                    if (proj.name == this.selectectedProject) {
+                        projElm.classList.add("selected");
+                    }
+                }
+            }
+        });
         this.content.forEach(elm => {
-            this.root.appendChild(elm);
+            this.root.append(elm);
         });
     }
 
@@ -72,6 +108,7 @@ export class DOMSidebar {
     }
 
     selectProject(name) {
+        this.selectectedProject = name;
         for (const section in this.containers) {
             for (const project of this.containers[section].children) {
                 if (project.getAttribute("data-name") === name) {

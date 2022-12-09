@@ -9,7 +9,6 @@ export class DOMMainContent {
     }
 
     render(project) {
-        console.log("let's render " + project.name);
         let titleElement = this.createTitleElement(project);
         let tasksElement = this.createTasksElement(project);
         this.root.replaceChildren(titleElement, tasksElement);
@@ -76,6 +75,11 @@ export class DOMMainContent {
             elm.append(desc);
         }
 
+        if (task.checked) {
+            elm.classList.add("completed");
+            checkBox.checked = true;
+        };
+
         elm.addEventListener("mouseenter", e => {
             priority.classList.add("hover");
             date.innerText = task.project.name;
@@ -92,6 +96,8 @@ export class DOMMainContent {
 
         checkBox.addEventListener("click", e => {
             elm.classList.toggle("completed");
+            task.checked = !task.checked;
+            this.eventHandler.updateLocalStorage();
         });
 
         return elm;

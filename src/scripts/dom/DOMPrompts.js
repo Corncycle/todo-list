@@ -80,7 +80,6 @@ export class DOMPrompts {
         let descInput = this.makeTextInput("Description (optional)");
         let projectNames = userProjects.map(proj => proj.name);
         projectNames = projectNames.concat(["Uncategorized"]);
-        console.log(projectNames);
         let projectInput = this.makeDropdownIput(true, false, "--Project--", ...projectNames);
         projectInput.childNodes.forEach(child => {
             if (child.innerText == currentProject.name) {

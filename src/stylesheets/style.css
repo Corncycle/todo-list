@@ -307,6 +307,10 @@ h1.topbar-title {
     background: black;
 }
 
+.task-priority.hover:hover {
+    background: gray;
+}
+
 .task-proj-name {
     padding-left: var(--subtitlePadding);
     font-size: 0.8rem;

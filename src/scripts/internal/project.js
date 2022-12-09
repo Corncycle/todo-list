@@ -2,10 +2,20 @@ import { Task } from "./task.js";
 import { todayString, getEndOfWeekDate, getTodayDate } from "../util.js";
 
 export class Project {
-    constructor(name, projectsManager) {
+    constructor(name, projectsManager, existingTasks) {
         this.name = name;
-        this._tasks = [];
         this.projectsManager = projectsManager;
+        if (existingTasks && existingTasks.length > 0) {
+            this._tasks = [];
+            for (let i = 0; i < existingTasks.length; i++) {
+                let t = existingTasks[i];
+                let dateString = t.date;
+                let d = new Date(dateString);
+                this._tasks.push(new Task(this, t.name, d.toLocaleDateString("en-CA"), t.description, t.priority, t.checked));
+            };
+        } else {
+            this._tasks = [];
+        }
     }
 
     static specialProjects = ["Today", "This Week", "All Tasks", "Uncategorized"];

@@ -1,8 +1,16 @@
 import { Project } from "./project.js";
 
 export class ProjectsManager {
-    constructor() {
-        this._projects = [];
+    constructor(existingProjectsManager) {
+        if (existingProjectsManager) {
+            this._projects = [];
+            for (let i = 0; i < existingProjectsManager._projects.length; i++) {
+                let bareProj = existingProjectsManager._projects[i];
+                this._projects.push(new Project(bareProj.name, this, bareProj._tasks));
+            }
+        } else {
+            this._projects = [];
+        }
     }
 
     get projects() {
@@ -29,8 +37,6 @@ export class ProjectsManager {
     }
 
     getProject(name) {
-        console.log("looking for " + name + " in ");
-        console.log(this._projects);
         for (let i = 0; i < this._projects.length; i++) {
             if (this._projects[i].name === name) {
                 return this._projects[i]               
