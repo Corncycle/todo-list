@@ -258,10 +258,12 @@ h1.topbar-title {
     padding: 0;
     margin: 0;
     border: none;
-    width: 1.5rem;
+    min-width: 1.5rem;
     height: 1.5rem;
-    -webkit-mask: url(../images/delete.svg) 0 0 / 100% 100%;
-    mask: url(../images/delete.svg) no-repeat center;
+    -webkit-mask-image: url(../images/delete.svg);
+    -webkit-mask-size: 100%;
+    mask-image: url(../images/delete.svg);
+    mask-size: 100%;
     background: black;
 }
 
@@ -295,15 +297,17 @@ h1.topbar-title {
 
 .task-priority {
     cursor: pointer;
-    width: 1.5rem;
+    min-width: 1.5rem;
     height: 1.5rem;
-    -webkit-mask: url(../images/filled-circle.svg) 0 0 / 100% 100%;
-    mask: url(../images/filled-circle.svg) no-repeat center;
+    -webkit-mask-image: url(../images/filled-circle.svg);
+    -webkit-mask-size: 100%;
+    mask-image: url(../images/filled-circle.svg);
+    mask-size: 100%;
 }
 
 .task-priority.hover {
-    -webkit-mask: url(../images/delete.svg) 0 0 / 100% 100%;
-    mask: url(../images/delete.svg) no-repeat center;
+    -webkit-mask-image: url(../images/delete.svg);
+    mask-image: url(../images/delete.svg);
     background: black;
 }
 
